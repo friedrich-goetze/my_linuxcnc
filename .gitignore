@@ -1,0 +1,8 @@
+/nc_files/
+/configs/*
+!/configs/m_hoch_5*
+!/configs/m_hoch_5/*
+/configs/m_hoch_5/*.ngc
+/configs/m_hoch_5/backups/
+/configs/m_hoch_5/zprobe_results.txt
+**/*.code-workspace

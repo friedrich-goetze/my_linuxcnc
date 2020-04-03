@@ -1,0 +1,5 @@
+# Include your custom HAL commands here
+# This file will not be overwritten when you run PNCconf again
+
+# for remote joypad
+loadusr -W hal_input -KRAL X-Box
