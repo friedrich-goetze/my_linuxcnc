@@ -37,6 +37,13 @@ o<probe_toollen> sub
     ; make probe origin
     G10 L20 P0 X0 Y0 Z0
     G54
+    G1 F400 Z.5
+
+    ; offset that the edge is always centered
+    #<toold> = [#5410]
+    o31 if [#<toold> GT 13.0]
+        G1 F400 X[#<toold> / 2]
+    o31 endif
 
     #<zsum> = 0.0
     #<n> = 4.0

@@ -5,10 +5,6 @@ o<remap_toolchange> sub
     o10 if [#<_value> NE 1.0]
         o<remap_toolchange> return [-1]
     o10 endif
-    
-	(debug, change: tool=#<_current_tool>)
-	(debug, change: selected_tool=#<selected_tool>)
-	(debug, change: selected_pocket=#<selected_pocket>)
 	
 	; check if tool is already selected
 	;
@@ -24,6 +20,10 @@ o<remap_toolchange> sub
         o21 endif
 	o20 endif
 
+    ; do default stuff
+    ; this also gives access to tooltable
+    M6
+
     ; goto tool-change possition 
     ; 
     o<safe_move> call [0.5] [0.1]
@@ -33,6 +33,11 @@ o<remap_toolchange> sub
 
     o<probe_toollen> call
     #<toollen> = [#<_value>]
+
+    ; custom code for 3axis edge finder
+    o21 if [#<selected_tool> EQ 99]
+        #<toollen> = [#<toollen> - 2.0]
+    o21 endif
 
     o30 if [#<toollen> EQ -1.0]
         o<epilog> call
