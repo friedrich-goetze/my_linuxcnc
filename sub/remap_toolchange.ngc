@@ -26,23 +26,30 @@ o<remap_toolchange> sub
 
     ; goto tool-change possition 
     ; 
-    o<safe_move> call [0.5] [0.1]
+    o<safe_move> call [0.25] [0.1]
 
     ; wait for user pressing input 1
     M66 P0 L1 Q999999
 
-    o<probe_toollen> call
+    #<offset> = 0.0
+    o30 if [#<selected_tool> LE 80.0]
+        (MSG, large tool detected, using probing offset)
+        #<offset> = 7.0
+    o30 endif
+
+    o<probe_toollen> call [#<offset>]
     #<toollen> = [#<_value>]
 
     ; custom code for 3axis edge finder
-    o21 if [#<selected_tool> EQ 99]
+    o40 if [#<selected_tool> EQ 99.0]
+        (MSG, TOOL IS A EDGEFINDER)
         #<toollen> = [#<toollen> - 2.0]
-    o21 endif
+    o40 endif
 
-    o30 if [#<toollen> EQ -1.0]
+    o50 if [#<toollen> EQ -1.0]
         o<epilog> call
         o<remap_toolchange> return [-1.0]
-    o30 endif 
+    o50 endif 
 
 
     ; restore modal state

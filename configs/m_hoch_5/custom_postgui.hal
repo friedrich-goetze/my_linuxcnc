@@ -70,3 +70,12 @@
 # net sel-xto halui.mdi-command-00 <= input.0.abs-hat0x-is-neg
 # net sel-yto halui.mdi-command-01 <= input.0.abs-hat0y-is-neg
 # net sel-zto halui.mdi-command-02 <= input.0.abs-hat0x-is-pos
+
+# pyvcp
+
+ net remote-goto-a halui.mdi-command-00 <= pyvcp.goto-a
+ net remote-goto-b halui.mdi-command-01 <= pyvcp.goto-b
+ net remote-goto-c halui.mdi-command-02 <= pyvcp.goto-c
+ net remote-goto-d halui.mdi-command-03 <= pyvcp.goto-d
+ net remote-goto-e halui.mdi-command-04 <= pyvcp.goto-e
+ net remote-goto-f halui.mdi-command-05 <= pyvcp.goto-f

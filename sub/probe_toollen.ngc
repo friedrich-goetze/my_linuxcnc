@@ -3,6 +3,8 @@
 
 o<probe_toollen> sub
 
+    #offset = #1
+
     o<prolog> call
     o10 if [#<_value> NE 1.0]
         o<probe_toollen> return [-1.0]
@@ -23,7 +25,7 @@ o<probe_toollen> sub
 
     ; go above z-finder
     G53 G0 Z0
-    G53 G0 X[#<probex>] Y[#<probey>]
+    G53 G0 X[#<probex> + #<offset>] Y[#<probey>]
 
     ; find z-finder
     G38.3 F400 Z[#<probez> - 20.0]
@@ -38,12 +40,6 @@ o<probe_toollen> sub
     G10 L20 P0 X0 Y0 Z0
     G54
     G1 F400 Z.5
-
-    ; offset that the edge is always centered
-    #<toold> = [#5410]
-    o31 if [#<toold> GT 13.0]
-        G1 F400 X[#<toold> / 2]
-    o31 endif
 
     #<zsum> = 0.0
     #<n> = 4.0

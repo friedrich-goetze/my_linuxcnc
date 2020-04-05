@@ -2,46 +2,75 @@
 <pyvcp>
          <vbox>
          <relief>RIDGE</relief>         
-         <bd>6</bd>
+         <bd>1</bd>
                 <label>
                         <text>"Spindle Speed:"</text>
-                        <font>("Helvetica",20)</font>
+                        <font>("Helvetica",13)</font>
                 </label>
                 <bar>
                         <halpin>"spindle-speed"</halpin>
-                        <max_>3000</max_>
+                        <max_>24000</max_>
                 </bar>
-                <label>
-                        <text>"Spindle-At-Speed:"</text>
-                        <font>("Helvetica",20)</font>
-                </label>
                 <hbox>
-                    <label>
-                            <text>"             "</text>
-                            <font>("Helvetica",20)</font>
-                    </label>
-                    <led>
-                        <halpin>"spindle-at-speed-led"</halpin> 
-                        <size>30</size> 
-                        <on_color>"green"</on_color>
-                        <off_color>"red"</off_color>
-                    </led>
+                        <vbox>
+                                <label>
+                                        <text>"Spindle-At-Speed:"</text>
+                                        <font>("Helvetica",13)</font>
+                                </label>
+                                <label>
+                                        <text>"Probe in:"</text>
+                                        <font>("Helvetica",13)</font>
+                                </label>
+                        </vbox>      
+                        <vbox>
+                                <led>
+                                        <halpin>"spindle-at-speed-led"</halpin> 
+                                        <size>14</size> 
+                                        <on_color>"green"</on_color>
+                                        <off_color>"red"</off_color>
+                                </led>
+                                <led>
+                                        <halpin>"probe-in-led"</halpin> 
+                                        <size>14</size> 
+                                        <on_color>"green"</on_color>
+                                        <off_color>"red"</off_color>
+                                </led>
+                        </vbox>
                 </hbox>
-                <label>
-                        <text>"Probe in:"</text>
-                        <font>("Helvetica",20)</font>
-                </label>		
                 <hbox>
-                    <label>
-                            <text>"             "</text>
-                            <font>("Helvetica",20)</font>
-                    </label>
-                    <led>
-                        <halpin>"probe-in-led"</halpin> 
-                        <size>30</size> 
-                        <on_color>"green"</on_color>
-                        <off_color>"red"</off_color>
-                    </led>
+                        <button>
+                                <width>"7"</width>
+                                <halpin>"goto-a"</halpin>
+                                <text>"Y: 0%"</text> 
+                        </button>
+                        <button>
+                                <width>"7"</width>
+                                <halpin>"goto-b"</halpin>
+                                <text>"Y: 60%"</text> 
+                        </button>
+                        <button>
+                                <width>"7"</width>
+                                <halpin>"goto-c"</halpin>
+                                <text>"Y: 100%"</text> 
+                        </button>
+                </hbox>
+
+                <hbox>
+                        <button>
+                                <width>"7"</width>
+                                <halpin>"goto-d"</halpin>
+                                <text>"X: 0%"</text> 
+                        </button>
+                        <button>
+                                <width>"7"</width>
+                                <halpin>"goto-e"</halpin>
+                                <text>"X: 50%"</text> 
+                        </button>
+                        <button>
+                                <width>"7"</width>
+                                <halpin>"goto-f"</halpin>
+                                <text>"X: 100%"</text> 
+                        </button>
                 </hbox>
         </vbox>
 </pyvcp>
