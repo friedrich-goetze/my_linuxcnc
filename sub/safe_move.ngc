@@ -3,7 +3,10 @@
 
 o<safe_move> sub
 
-    o<assert_safety> call
+    o<prolog> call
+    o10 if [#<_value> NE 1.0]
+        return [-1]
+    o10 endif
 
     ; config
     #<safe_dist> = 6
@@ -12,14 +15,14 @@ o<safe_move> sub
     #<relx> = #1
     #<rely> = #2
     
-    o10 if [[#<relx> LT 0.000] OR [#<relx> GT 1.000]]
+    o20 if [[#<relx> LT 0.000] OR [#<relx> GT 1.000]]
         (abort, arg 1 must be within [0.000, 1.000])
-    o10 endif
-    
-    
-    o20 if [[#<rely> LT 0.000] OR [#<rely> GT 1.000]]
-        (abort, arg 0 must be within [0.000, 1.000])
     o20 endif
+    
+    
+    o30 if [[#<rely> LT 0.000] OR [#<rely> GT 1.000]]
+        (abort, arg 0 must be within [0.000, 1.000])
+    o30 endif
     
     ; read machine space
     #<xmin> = [#<_ini[AXIS_0]MIN_LIMIT> + #<safe_dist>]
@@ -33,9 +36,11 @@ o<safe_move> sub
     #<yspace> = [#<ymax> - #<ymin>]
     #<zspace> = [#<zmax> - #<zmin>]
     
-    o30 if [[#<xspace> LT 0.000] OR [#<yspace> LT 0.000] OR [#<zspace> LT 0.000]]
-        (abort, your machine coordinate space is too small)
-    o30 endif
+    o40 if [[#<xspace> LT 0.000] OR [#<yspace> LT 0.000] OR [#<zspace> LT 0.000]]
+        (debug, your machine coordinate space is too small)
+        o<epilog> call
+        o<safe_move> return [-1]
+    o40 endif
     
     ; compute destination
     #<xtarget> = [#<xmin> + [#<relx> * #<xspace>]]
@@ -46,6 +51,7 @@ o<safe_move> sub
     G53 G0 Z#<ztarget>
     G53 G0 X#<xtarget> Y#<ytarget>
 
-o<safe_move> endsub
+    o<epilog> call
 
-m2
+o<safe_move> endsub [1]
+M2

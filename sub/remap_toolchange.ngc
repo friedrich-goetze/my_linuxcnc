@@ -1,7 +1,10 @@
 o<remap_toolchange> sub
 
-    ; do default stuff
-    m6
+    ; save modal state and prolog
+    o<prolog> call
+    o10 if [#<_value> NE 1.0]
+        o<remap_toolchange> return [-1]
+    o10 endif
     
 	(debug, change: tool=#<_current_tool>)
 	(debug, change: selected_tool=#<selected_tool>)
@@ -9,20 +12,17 @@ o<remap_toolchange> sub
 	
 	; check if tool is already selected
 	;
-	o10 if [#<_current_tool> EQ #<selected_tool>]
-	    o<safe_move> call [0.6] [0.1]
+	o20 if [#<_current_tool> EQ #<selected_tool>]
 	    (debug, Tool #<selected_tool> is already selected. To insert and probe tool again, press input 1 for 5 seconds. Otherwise press shorter.)
 	    ; wait for user pressing button
         M66 P0 L1 Q999999
-        (MSG, pressed)
         ; wait for user releasing button
         M66 P0 L4 Q5
-        (MSG, released)
-        o20 if [#5399 GE 0.0]
+        o21 if [#5399 GE 0.0]
+            o<epilog> call
             o<remap_toolchange> return [1]
-        o20 endif
-	o10 else
-	o10 endif
+        o21 endif
+	o20 endif
 
     ; goto tool-change possition 
     ; 
@@ -31,9 +31,19 @@ o<remap_toolchange> sub
     ; wait for user pressing input 1
     M66 P0 L1 Q999999
 
-    o<safe_move> call [0.1] [0.1]
-    
-    g43.1 Z-10.0
+    o<probe_toollen> call
+    #<toollen> = [#<_value>]
+
+    o30 if [#<toollen> EQ -1.0]
+        o<epilog> call
+        o<remap_toolchange> return [-1.0]
+    o30 endif 
+
+
+    ; restore modal state
+    o<epilog> call
+
+    G10 L1 P[#<selected_tool>] Z[#<toollen>]
 
 
 o<remap_toolchange> endsub [1]

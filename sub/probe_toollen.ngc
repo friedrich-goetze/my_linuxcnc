@@ -1,0 +1,71 @@
+; performs a probe mesurement and returns the probed tool len
+; if not successfull, -1 will be returned
+
+o<probe_toollen> sub
+
+    o<prolog> call
+    o10 if [#<_value> NE 1.0]
+        o<probe_toollen> return [-1.0]
+    o10 endif
+
+    #<probex> = [#1666]
+    #<probey> = [#1667]
+    #<probez> = [#1668]
+
+    o20 if [[#<probex> EQ 0.0] OR [#<probey> EQ 0.0] OR [#<probez> EQ 0.0]]
+        o<epilog> call
+        (debug, Probe position is not set #1666 - #1668)
+        o<probe_toollen> return [-1.0]
+    o20 endif
+
+    ; disable toollen offset, if any
+    G49
+
+    ; go above z-finder
+    G53 G0 Z0
+    G53 G0 X[#<probex>] Y[#<probey>]
+
+    ; find z-finder
+    G38.3 F400 Z[#<probez> - 20.0]
+    o30 if [#5070 NE 1.0]
+        (debug, z-finder not found...)
+        G53 G0 Z0
+        o<epilog> call
+        o<probe_toollen> return [-1.0]
+    o30 endif
+
+    ; make probe origin
+    G10 L20 P0 X0 Y0 Z0
+    G54
+
+    #<zsum> = 0.0
+    #<n> = 4.0
+    #<i> = 0
+    o40 while [#<i> LE #<n>]
+        G1 F400 Z.5
+        G38.3 F15 Z-1
+        o41 if [#5070 NE 1.0]
+            (debug, z-finder disappeared)
+            G0 Z0
+            o<epilog> call
+            o<probe_toollen> return [-1.0]
+        o41 endif
+    
+        ;ignore first measurement
+        o42 if [#<i> NE 0]
+            #<zsum> = [#<zsum> + #<_z>]
+        o42 endif
+        #<i> = [#<i> + 1.0]
+    o40 endwhile
+
+    ; absolute z coord of where we touched the finder
+    #<azt> = [#5223 - [#<zsum> / #<n>]]
+
+    #<probed_len> = [#<azt> - #<probez>]
+
+    o<epilog> call
+
+    G53 G0 Z0
+
+o<probe_toollen> endsub [#<probed_len>]
+M2
