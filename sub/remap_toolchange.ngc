@@ -1,0 +1,40 @@
+o<remap_toolchange> sub
+
+    ; do default stuff
+    m6
+    
+	(debug, change: tool=#<_current_tool>)
+	(debug, change: selected_tool=#<selected_tool>)
+	(debug, change: selected_pocket=#<selected_pocket>)
+	
+	; check if tool is already selected
+	;
+	o10 if [#<_current_tool> EQ #<selected_tool>]
+	    o<safe_move> call [0.6] [0.1]
+	    (debug, Tool #<selected_tool> is already selected. To insert and probe tool again, press input 1 for 5 seconds. Otherwise press shorter.)
+	    ; wait for user pressing button
+        M66 P0 L1 Q999999
+        (MSG, pressed)
+        ; wait for user releasing button
+        M66 P0 L4 Q5
+        (MSG, released)
+        o20 if [#5399 GE 0.0]
+            o<remap_toolchange> return [1]
+        o20 endif
+	o10 else
+	o10 endif
+
+    ; goto tool-change possition 
+    ; 
+    o<safe_move> call [0.5] [0.1]
+
+    ; wait for user pressing input 1
+    M66 P0 L1 Q999999
+
+    o<safe_move> call [0.1] [0.1]
+    
+    g43.1 Z-10.0
+
+
+o<remap_toolchange> endsub [1]
+m2

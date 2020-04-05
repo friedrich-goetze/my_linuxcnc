@@ -1,0 +1,51 @@
+; safe move to a relative positions in machine-coordinates
+; positions must be within [0,1] where 0 is the begin, 1 the end of an axis
+
+o<safe_move> sub
+
+    o<assert_safety> call
+
+    ; config
+    #<safe_dist> = 6
+
+    ; read and check arguments
+    #<relx> = #1
+    #<rely> = #2
+    
+    o10 if [[#<relx> LT 0.000] OR [#<relx> GT 1.000]]
+        (abort, arg 1 must be within [0.000, 1.000])
+    o10 endif
+    
+    
+    o20 if [[#<rely> LT 0.000] OR [#<rely> GT 1.000]]
+        (abort, arg 0 must be within [0.000, 1.000])
+    o20 endif
+    
+    ; read machine space
+    #<xmin> = [#<_ini[AXIS_0]MIN_LIMIT> + #<safe_dist>]
+    #<xmax> = [#<_ini[AXIS_0]MAX_LIMIT> - #<safe_dist>]
+    #<ymin> = [#<_ini[AXIS_1]MIN_LIMIT> + #<safe_dist>]
+    #<ymax> = [#<_ini[AXIS_1]MAX_LIMIT> - #<safe_dist>]
+    #<zmin> = [#<_ini[AXIS_2]MIN_LIMIT> + #<safe_dist>]
+    #<zmax> = [#<_ini[AXIS_2]MAX_LIMIT> - #<safe_dist>]
+    
+    #<xspace> = [#<xmax> - #<xmin>]
+    #<yspace> = [#<ymax> - #<ymin>]
+    #<zspace> = [#<zmax> - #<zmin>]
+    
+    o30 if [[#<xspace> LT 0.000] OR [#<yspace> LT 0.000] OR [#<zspace> LT 0.000]]
+        (abort, your machine coordinate space is too small)
+    o30 endif
+    
+    ; compute destination
+    #<xtarget> = [#<xmin> + [#<relx> * #<xspace>]]
+    #<ytarget> = [#<ymin> + [#<rely> * #<yspace>]]
+    #<ztarget> = 0.000
+    
+    ; move spindle up
+    G53 G0 Z#<ztarget>
+    G53 G0 X#<xtarget> Y#<ytarget>
+
+o<safe_move> endsub
+
+m2

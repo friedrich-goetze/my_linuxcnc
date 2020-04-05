@@ -1,0 +1,9 @@
+o<assert_safety> sub
+
+    o10 if [[#<_hal[axis.0.homed]> NE 1] OR [#<_hal[axis.1.homed]> NE 1] or [#<_hal[axis.2.homed]> NE 1]]
+        (abort, Machine isn't homed!)
+    o10 endif
+    
+o<assert_safety> endsub
+
+m2

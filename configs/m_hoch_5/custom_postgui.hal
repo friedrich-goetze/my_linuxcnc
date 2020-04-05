@@ -30,25 +30,25 @@
 
  # set the jog speed for the joypad again use numbers that make sense for your machine
  setp mux4.0.in0 0 # this one must be 0 to prevent motion unless a button is pressed
- setp mux4.0.in1 25
- setp mux4.0.in2 100
- setp mux4.0.in3 1500
+ setp mux4.0.in1 10
+ setp mux4.0.in2 500
+ setp mux4.0.in3 1800
 
  setp joyhandle.0.scale 1
- setp joyhandle.0.power 3
+ setp joyhandle.0.power 1.5
  setp joyhandle.0.offset 0
  setp joyhandle.0.inverse 0
- setp joyhandle.0.deadband 0.2
+ setp joyhandle.0.deadband 0.05
  setp joyhandle.1.scale -1
- setp joyhandle.1.power 3
+ setp joyhandle.1.power 1.5
  setp joyhandle.1.offset 0
  setp joyhandle.1.inverse 0
- setp joyhandle.1.deadband 0.2
+ setp joyhandle.1.deadband 0.05
  setp joyhandle.2.scale -1
- setp joyhandle.2.power 3
+ setp joyhandle.2.power 1.5
  setp joyhandle.2.offset 0
  setp joyhandle.2.inverse 0
- setp joyhandle.2.deadband 0.2
+ setp joyhandle.2.deadband 0.05
 
  net joystick-x joyhandle.0.in <= input.0.abs-x-position 
  net joystick-y joyhandle.1.in <= input.0.abs-y-position
