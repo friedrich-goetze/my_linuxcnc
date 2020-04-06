@@ -26,7 +26,7 @@ o<remap_toolchange> sub
 
     ; goto tool-change possition 
     ; 
-    o<safe_move> call [0.25] [0.1]
+    o<safe_move_percent> call [0.25] [0.1]
 
     ; wait for user pressing input 1
     M66 P0 L1 Q999999
