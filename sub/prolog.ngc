@@ -47,7 +47,7 @@ o<prolog> sub
     G91.1
 
     ; exact path mode
-    G61
+    ; G61
     
 o<prolog> endsub [1]
 

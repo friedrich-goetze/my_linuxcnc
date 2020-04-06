@@ -3,7 +3,7 @@
 
 o<probe_toollen> sub
 
-    #offset = #1
+    #<offset> = #1
 
     o<prolog> call
     o10 if [#<_value> NE 1.0]
@@ -22,6 +22,10 @@ o<probe_toollen> sub
 
     ; disable toollen offset, if any
     G49
+    
+    ; make pos on top of finder origin
+    G10 L20 P0 X0 Y0 Z0
+    G54
 
     ; go above z-finder
     G53 G0 Z0
