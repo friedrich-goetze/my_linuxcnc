@@ -33,10 +33,6 @@ o<prolog> sub
     ; coordinate system
     G54
 
-    ; no tool len comensation
-    G43.1 X0 Y0 Z0
-    G49
-
     ; retract plane
     G98
 

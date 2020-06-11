@@ -17,16 +17,19 @@ o<remap_toolchange> sub
 	; check if tool is already selected
 	;
 	o20 if [#<_current_tool> EQ #<selected_tool>]
-	    (debug, Tool #<selected_tool> is already selected. To insert and probe tool again, press input 1 for 3 seconds. Otherwise press shorter.)
-	    ; wait for user pressing button
-        M66 P0 L1 Q999999
-        ; wait for user releasing button
-        M66 P0 L4 Q3.0
-        o21 if [#5399 GE 0.0]
-            (MSG, Continue to use Tool as is.)
-            o<epilog> call
-            o<remap_toolchange> return [1]
-        o21 endif
+	    ; (debug, Tool #<selected_tool> is already selected. To insert and probe tool again, press input 1 for 3 seconds. Otherwise press shorter.)
+	    ; ; wait for user pressing button
+        ; M66 P0 L1 Q999999
+        ; ; wait for user releasing button
+        ; M66 P0 L4 Q3.0
+        ; o21 if [#5399 GE 0.0]
+        ;     (MSG, Continue to use Tool as is.)
+        ;     o<epilog> call
+        ;     o<remap_toolchange> return [1]
+        ; o21 endif
+        (MSG, M6: Tool already selected.)
+        o<epilog> call
+        o<remap_toolchange> return [1]
 	o20 endif
 
     ; do default stuff
@@ -36,6 +39,11 @@ o<remap_toolchange> sub
     ; goto tool-change possition 
     ; 
     o<safe_move_percent> call [0.25] [0.1]
+    o25 if [#<_value> EQ -1.0]
+        (MSG, ERR: SAFE MOVE FAILED)
+        o<epilog> call
+        o<remap_toolchange> return [-1.0]
+    o25 endif
 
     ; wait for user pressing input 1
     (MSG, Change tool and press probe when done.)
@@ -57,6 +65,7 @@ o<remap_toolchange> sub
     o40 endif
 
     o50 if [#<toollen> EQ -1.0]
+        (MSG, PROBE TOOLLEN FAILED)
         o<epilog> call
         o<remap_toolchange> return [-1.0]
     o50 endif 

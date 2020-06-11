@@ -32,7 +32,7 @@ o<probe_toollen> sub
     G53 G0 X[#<probex> + #<offset>] Y[#<probey>]
 
     ; find z-finder
-    G38.3 F400 Z[#<probez> - 20.0]
+    G38.3 F800 Z[#<probez> - 20.0]
     o30 if [#5070 NE 1.0]
         (debug, z-finder not found...)
         G53 G0 Z0
