@@ -50,10 +50,10 @@ net spindle-ccw hm2_5i25.0.7i76.0.0.output-15
 net estop-ext     <=  hm2_5i25.0.7i76.0.0.input-00
 
 # --- DIN-00 ---
-net din-00     <=  hm2_5i25.0.7i76.0.0.input-06
+net din-00     <=  hm2_5i25.0.7i76.0.0.input-06-not
 
 # --- PROBE-IN ---
-net probe-in     <=  hm2_5i25.0.7i76.0.0.input-07
+net probe-in     <=  hm2_5i25.0.7i76.0.0.input-07-not
 
 # --- BOTH-HOME-X ---
 net both-home-x     <=  hm2_5i25.0.7i76.0.0.input-29

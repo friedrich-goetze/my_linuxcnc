@@ -72,5 +72,26 @@
                                 <text>"X: 100%"</text> 
                         </button>
                 </hbox>
+
+                <hbox>
+                        <button>
+                                <width>"21"</width>
+                                <halpin>"remeasure-tool"</halpin>
+                                <text>"Remeasure tool"</text>
+                        </button>
+                </hbox>
+                
+                <hbox>
+                        <button>
+                                <width>"10"</width>
+                                <halpin>"center-x"</halpin>
+                                <text>"Set X Midpoint"</text> 
+                        </button>
+                        <button>
+                                <width>"10"</width>
+                                <halpin>"center-y"</halpin>
+                                <text>"Set Y Midpoint"</text> 
+                        </button>
+                </hbox>
         </vbox>
 </pyvcp>
